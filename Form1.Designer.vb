@@ -185,7 +185,7 @@ Partial Class Form1
         Me.SelectColorButton.Name = "SelectColorButton"
         Me.SelectColorButton.Size = New System.Drawing.Size(104, 23)
         Me.SelectColorButton.TabIndex = 2
-        Me.SelectColorButton.Text = "Select Color"
+        Me.SelectColorButton.Text = "&Select Color"
         Me.SelectColorButton.UseVisualStyleBackColor = True
         '
         'DrawWaveformsButton
@@ -194,7 +194,7 @@ Partial Class Form1
         Me.DrawWaveformsButton.Name = "DrawWaveformsButton"
         Me.DrawWaveformsButton.Size = New System.Drawing.Size(126, 23)
         Me.DrawWaveformsButton.TabIndex = 3
-        Me.DrawWaveformsButton.Text = "Draw Waveforms"
+        Me.DrawWaveformsButton.Text = "Draw &Waveforms"
         Me.DrawWaveformsButton.UseVisualStyleBackColor = True
         '
         'ClearButton
