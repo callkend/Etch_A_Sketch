@@ -18,6 +18,7 @@ Public Class Form1
         ToolTip1.SetToolTip(ClearButton, "Clears the Screen")
         ToolTip1.SetToolTip(ExitButton, "Close Program")
         ToolTip1.SetToolTip(PictureBox1, "Hold Left Mouse Button to Draw")
+
     End Sub
 
     Private Sub Form1_Resize(sender As Object, e As EventArgs) Handles MyBase.SizeChanged
@@ -64,45 +65,45 @@ Public Class Form1
         g.Dispose()
     End Sub
 
-    'Extra Function to draw with WASD
-    'Sub DrawStuff(direction As Integer)
-    '    Dim g As Graphics = PictureBox1.CreateGraphics
-    '    Dim pen As New Pen(PenColor(False))
-    '    Dim x As Integer = 250
-    '    Dim y As Integer = 250
+    'Extra Function to draw With WASD
+    Dim x As Integer = 250
+    Dim y As Integer = 250
+    Sub DrawStuff(direction As Integer)
+        Dim g As Graphics = PictureBox1.CreateGraphics
+        Dim pen As New Pen(PenColor(False))
 
-    '    Select Case direction
-    '        Case 0
-    '            g.DrawLine(pen, x, y, x, y + 1)
-    '            y += 1
-    '        Case 1
-    '            g.DrawLine(pen, x, y, x - 1, y)
-    '            x -= 1
-    '        Case 2
-    '            g.DrawLine(pen, x, y, x, y - 1)
-    '            y -= 1
-    '        Case 3
-    '            g.DrawLine(pen, x, y, x + 1, y)
-    '            x += 1
-    '    End Select
-    '    pen.Dispose()
-    '    g.Dispose()
-    'End Sub
 
-    'Extra function to draw with WASD
-    'Private Sub WASD_Press(sender As Object, e As KeyPressEventArgs) Handles PictureBox1.KeyPress
-    '    MsgBox(e.KeyChar)
-    '    Select Case e.KeyChar
-    '        Case CChar("s")
-    '            DrawStuff(0)
-    '        Case CChar("a")
-    '            DrawStuff(1)
-    '        Case CChar("w")
-    '            DrawStuff(2)
-    '        Case CChar("d")
-    '            DrawStuff(3)
-    '    End Select
-    'End Sub
+        Select Case direction
+            Case 0
+                g.DrawLine(pen, x, y, x, y + 1)
+                y += 1
+            Case 1
+                g.DrawLine(pen, x, y, x - 1, y)
+                x -= 1
+            Case 2
+                g.DrawLine(pen, x, y, x, y - 1)
+                y -= 1
+            Case 3
+                g.DrawLine(pen, x, y, x + 1, y)
+                x += 1
+        End Select
+        pen.Dispose()
+        g.Dispose()
+    End Sub
+
+    'Extra Function to draw With WASD
+    Private Sub WASD_Press(sender As Object, e As KeyPressEventArgs) Handles SelectColorButton.KeyPress
+        Select Case e.KeyChar
+            Case CChar("s")
+                DrawStuff(0)
+            Case CChar("a")
+                DrawStuff(1)
+            Case CChar("w")
+                DrawStuff(2)
+            Case CChar("d")
+                DrawStuff(3)
+        End Select
+    End Sub
 
     'Grabs mouse position, and what button is pressed on it
     Private Sub Mouser_Move(sender As Object, e As MouseEventArgs) Handles PictureBox1.MouseDown, PictureBox1.MouseMove
