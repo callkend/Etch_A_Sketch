@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class Form1
+Partial Class EtchASketch
     Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
@@ -181,7 +181,7 @@ Partial Class Form1
         '
         'SelectColorButton
         '
-        Me.SelectColorButton.Location = New System.Drawing.Point(390, 415)
+        Me.SelectColorButton.Location = New System.Drawing.Point(381, 415)
         Me.SelectColorButton.Name = "SelectColorButton"
         Me.SelectColorButton.Size = New System.Drawing.Size(104, 23)
         Me.SelectColorButton.TabIndex = 2
@@ -190,9 +190,9 @@ Partial Class Form1
         '
         'DrawWaveformsButton
         '
-        Me.DrawWaveformsButton.Location = New System.Drawing.Point(500, 415)
+        Me.DrawWaveformsButton.Location = New System.Drawing.Point(491, 415)
         Me.DrawWaveformsButton.Name = "DrawWaveformsButton"
-        Me.DrawWaveformsButton.Size = New System.Drawing.Size(126, 23)
+        Me.DrawWaveformsButton.Size = New System.Drawing.Size(135, 23)
         Me.DrawWaveformsButton.TabIndex = 3
         Me.DrawWaveformsButton.Text = "Draw &Waveforms"
         Me.DrawWaveformsButton.UseVisualStyleBackColor = True

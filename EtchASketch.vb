@@ -7,7 +7,7 @@
 Option Strict On
 Option Explicit On
 
-Public Class Form1
+Public Class EtchASketch
     Dim g As Graphics
 
     'Handles startup
@@ -17,7 +17,7 @@ Public Class Form1
         ToolTip1.SetToolTip(DrawWaveformsButton, "Draws a Sine, Cosine, and Tangent Waveforms")
         ToolTip1.SetToolTip(ClearButton, "Clears the Screen")
         ToolTip1.SetToolTip(ExitButton, "Close Program")
-        ToolTip1.SetToolTip(PictureBox1, "Hold Left Mouse Button to Draw")
+        ToolTip1.SetToolTip(PictureBox1, "Hold Left Mouse Button to Draw or use 8456 on Numpad")
 
     End Sub
 
@@ -65,7 +65,7 @@ Public Class Form1
         g.Dispose()
     End Sub
 
-    'Extra Function to draw With WASD
+    'Extra Function to draw with 8456 best used with Numpad
     Dim x As Integer = 250
     Dim y As Integer = 250
     Sub DrawStuff(direction As Integer)
@@ -91,16 +91,17 @@ Public Class Form1
         g.Dispose()
     End Sub
 
-    'Extra Function to draw With WASD
-    Private Sub WASD_Press(sender As Object, e As KeyPressEventArgs) Handles SelectColorButton.KeyPress
+    'Extra Function to draw with 8456 best used with Numpad
+    Private Sub NUM8456_Press(sender As Object, e As KeyPressEventArgs) Handles SelectColorButton.KeyPress, DrawWaveformsButton.KeyPress, ClearButton.KeyPress, ExitButton.KeyPress
+        'MsgBox(e.KeyChar.ToString)
         Select Case e.KeyChar
-            Case CChar("s")
+            Case CChar("5")
                 DrawStuff(0)
-            Case CChar("a")
+            Case CChar("4")
                 DrawStuff(1)
-            Case CChar("w")
+            Case CChar("8")
                 DrawStuff(2)
-            Case CChar("d")
+            Case CChar("6")
                 DrawStuff(3)
         End Select
     End Sub
