@@ -8,8 +8,6 @@ Option Strict On
 Option Explicit On
 
 Public Class EtchASketch
-    Dim g As Graphics
-
     'Handles startup
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Resizing()
@@ -18,27 +16,29 @@ Public Class EtchASketch
         ToolTip1.SetToolTip(ClearButton, "Clears the Screen")
         ToolTip1.SetToolTip(ExitButton, "Close Program")
         ToolTip1.SetToolTip(PictureBox1, "Hold Left Mouse Button to Draw or use 8456 on Numpad")
-
     End Sub
 
     Private Sub Form1_Resize(sender As Object, e As EventArgs) Handles MyBase.SizeChanged
         Resizing()
-
     End Sub
 
     'Resizes the picture box, and moves controls to fit Window
     Sub Resizing()
         Dim xShifter As Integer = (Me.Width - ExitButton.Width - 20)
         Dim position As Point = New Point(xShifter, Me.Height - 70)
+
         ExitButton.Location = position
         xShifter -= ClearButton.Width
         position = New Point(xShifter, Me.Height - 70)
+
         ClearButton.Location = position
         xShifter -= DrawWaveformsButton.Width
         position = New Point(xShifter, Me.Height - 70)
+
         DrawWaveformsButton.Location = position
         xShifter -= SelectColorButton.Width
         position = New Point(xShifter, Me.Height - 70)
+
         SelectColorButton.Location = position
         PictureBox1.Height = ExitButton.Location.Y - 40
         PictureBox1.Width = Me.Width - 35
@@ -50,7 +50,6 @@ Public Class EtchASketch
         Static lastPosistion As Point
         Static i As Integer = 0
         Dim g As Graphics = PictureBox1.CreateGraphics
-
         Dim pen As New Pen(PenColor(False))
 
         If lastPosistion = zero Then
@@ -60,7 +59,6 @@ Public Class EtchASketch
         End If
         lastPosistion = mouse
 
-
         pen.Dispose()
         g.Dispose()
     End Sub
@@ -68,10 +66,10 @@ Public Class EtchASketch
     'Extra Function to draw with 8456 best used with Numpad
     Dim x As Integer = 250
     Dim y As Integer = 250
+
     Sub DrawStuff(direction As Integer)
         Dim g As Graphics = PictureBox1.CreateGraphics
         Dim pen As New Pen(PenColor(False))
-
 
         Select Case direction
             Case 0
@@ -87,13 +85,13 @@ Public Class EtchASketch
                 g.DrawLine(pen, x, y, x + 1, y)
                 x += 1
         End Select
+
         pen.Dispose()
         g.Dispose()
     End Sub
 
     'Extra Function to draw with 8456 best used with Numpad
     Private Sub NUM8456_Press(sender As Object, e As KeyPressEventArgs) Handles SelectColorButton.KeyPress, DrawWaveformsButton.KeyPress, ClearButton.KeyPress, ExitButton.KeyPress
-        'MsgBox(e.KeyChar.ToString)
         Select Case e.KeyChar
             Case CChar("5")
                 DrawStuff(0)
@@ -115,14 +113,13 @@ Public Class EtchASketch
         Select Case mouseButton
             Case "Left"
                 DrawLine(mousePosition)
-                'MsgBox($"{e.X},{e.Y} Button:{mouseButton}")
             Case "Right"
+                mousePosition = New Point(e.X + Me.Location.X, e.Y + Me.Location.Y)
                 ContextMenuStrip1.Show(mousePosition)
             Case "Middle"
                 PenColor(True)
             Case Else
         End Select
-
     End Sub
 
     'Allows for the context menu on the form
@@ -131,11 +128,12 @@ Public Class EtchASketch
         Dim mouseButton As String = e.Button.ToString
 
         If mouseButton = "Right" Then
+            mousePosition = New Point(e.X + Me.Location.X, e.Y + Me.Location.Y)
             ContextMenuStrip1.Show(mousePosition)
         End If
     End Sub
 
-    'Allows user to select color, and stores selected color
+    'Allows user to select color, and returns selected color
     Function PenColor(changeColor As Boolean) As Color
         Static color As New ColorDialog
 
@@ -164,14 +162,13 @@ Public Class EtchASketch
         For i = 0 To 360
             sineWave(i) = New PointF(CSng(PictureBox1.Width * i / 360), CSng(Math.Sin(i * Math.PI / 180) * PictureBox1.Height / 2) + CSng(PictureBox1.Height / 2))
             cosineWave(i) = New PointF(CSng(PictureBox1.Width * i / 360), CSng(Math.Cos(i * Math.PI / 180) * PictureBox1.Height / 2) + CSng(PictureBox1.Height / 2))
+            'Used to ignore tangent function points that leave bounds
             Try
                 g.DrawLine(New Pen(Color.Green), New PointF(CSng(PictureBox1.Width * i / 360), CSng(Math.Tan(i * Math.PI / 180) * PictureBox1.Height / 2) + CSng(PictureBox1.Height / 2)), New PointF(CSng(PictureBox1.Width * (i + 1) / 360), CSng(Math.Tan((i + 1) * Math.PI / 180) * PictureBox1.Height / 2) + CSng(PictureBox1.Height / 2)))
             Catch ex As Exception
-
             End Try
 
         Next
-
 
         'Draws Sine and Cosine Waveforms
         pen = New Pen(Color.Blue)
@@ -179,11 +176,11 @@ Public Class EtchASketch
 
         pen = New Pen(Color.Red)
         g.DrawCurve(pen, cosineWave)
-
     End Sub
 
     Private Sub Menu_Click(sender As Object, e As EventArgs) Handles ClearToolStripMenuItem.Click, ExitToolStripMenuItem.Click, SelectColorToolStripMenuItem.Click, DrawWaveformToolStripMenuItem.Click, AboutToolStripMenuItem.Click, ClearToolStripMenuItem1.Click, EditToolStripMenuItem1.Click, SelectColorToolStripMenuItem1.Click, DrawWaveformsToolStripMenuItem.Click, AboutToolStripMenuItem1.Click
         Dim itemClicked As String = sender.ToString
+
         Select Case itemClicked
             Case "Exit"
                 Me.Close()
@@ -194,7 +191,6 @@ Public Class EtchASketch
             Case "Draw Waveforms"
                 Waveform()
             Case "About"
-
         End Select
     End Sub
 
@@ -209,6 +205,8 @@ Public Class EtchASketch
         Dim orginalY As Integer = Me.Location.Y
 
         g.Clear(BackColor)
+
+        'Shakes the form
         For i = 0 To 100
             Dim point As New Point(orginalX + CInt(Rnd() * 10), orginalY + CInt(Rnd() * 10))
             Me.Location = (point)
